@@ -1,12 +1,5 @@
-#######################################################################
-# Copyright (C)                                                       #
-# 2016-2018 Shangtong Zhang(zhangshangtong.cpp@gmail.com)             #
-# 2016 Tian Jun(tianjun.cpp@gmail.com)                                #
-# 2016 Artem Oboturov(oboturov@gmail.com)                             #
-# 2016 Kenta Shimada(hyperkentakun@gmail.com)                         #
-# Permission given to modify the code as long as you keep this        #
-# declaration at the top                                              #
-#######################################################################
+"""The ten-armed testbed for the epsilon-greedy, UCB, and gradient bandit algorithms."""
+
 # %%
 from typing import Optional
 
@@ -23,10 +16,12 @@ class Bandit:
     # @epsilon: probability for exploration in epsilon-greedy algorithm
     # @initial: initial estimation for each action
     # @step_size: constant step size for updating estimations
-    # @sample_averages: if True, use sample averages to update estimations instead of constant step size
+    # @sample_averages: if True, use sample averages to update estimations instead of constant
+    # step size
     # @UCB_param: if not None, use UCB algorithm to select action
     # @gradient: if True, use gradient based bandit algorithm
-    # @gradient_baseline: if True, use average reward as baseline for gradient based bandit algorithm
+    # @gradient_baseline: if True, use average reward as baseline for gradient based bandit
+    # algorithm
     def __init__(
         self,
         k_arm: int = 10,
@@ -39,6 +34,31 @@ class Bandit:
         gradient_baseline: bool = False,
         true_reward: float = 0.0,
     ) -> None:
+        """Initialize the bandit.
+
+        Parameters
+        ----------
+        k_arm : int, optional
+            Number of arms, by default 10
+        epsilon : float, optional
+            Probability for exploration in epsilon-greedy algorithm, by default 0.0
+        initial : float, optional
+            Initial estimation for each action, by default 0.0
+        step_size : float, optional
+            Constant step size for updating estimations, by default 0.1
+        sample_averages : bool, optional
+            If True, use sample averages to update estimations instead of constant step size,
+            by default False
+        ucb_param : Optional[float], optional
+            If not None, use UCB algorithm to select action, by default None
+        gradient : bool, optional
+            If True, use gradient based bandit algorithm, by default False
+        gradient_baseline : bool, optional
+            If True, use average reward as baseline for gradient based bandit algorithm
+            by default False
+        true_reward : float, optional
+            The true reward, by default 0.0
+        """
         self.k = k_arm
         self.step_size = step_size
         self.sample_averages = sample_averages
@@ -177,7 +197,7 @@ def figure_2_1():
 
 
 def figure_2_2(runs=2000, time=1000):
-    epsilons = [0, 0.1, 0.01]
+    epsilons = [0, 0.5, 0.1, 0.01]
     bandits = [Bandit(epsilon=eps, sample_averages=True) for eps in epsilons]
     best_action_counts, rewards = simulate(runs, time, bandits)
 
@@ -282,9 +302,9 @@ def figure_2_6(runs=2000, time=1000):
 
     i = 0
     for label, parameter in zip(labels, parameters):
-        l = len(parameter)
-        plt.plot(parameter, rewards[i : i + l], label=label)
-        i += l
+        length = len(parameter)
+        plt.plot(parameter, rewards[i : i + length], label=label)
+        i += length
     plt.xlabel("Parameter($2^x$)")
     plt.ylabel("Average reward")
     plt.legend()
@@ -294,9 +314,9 @@ def figure_2_6(runs=2000, time=1000):
 
 
 if __name__ == "__main__":
-    figure_2_1()
+    # figure_2_1()
     figure_2_2()
-    figure_2_3()
-    figure_2_4()
-    figure_2_5()
-    figure_2_6()
+    # figure_2_3()
+    # figure_2_4()
+    # figure_2_5()
+    # figure_2_6()
